@@ -888,7 +888,8 @@ public class Analyzer extends RuleExecutor<LogicalPlan> {
                 boolean qualified = u.qualifier() != null;
                 for (Alias alias : aliases) {
                     // don't replace field with their own aliases (it creates infinite cycles)
-                    if (alias.anyMatch(e -> e == u) == false
+                    boolean cyclicReference = alias.anyMatch(e -> e instanceof Attribute a && a.qualifiedName().equals(u.qualifiedName()));
+                    if (cyclicReference == false
                         && (qualified
                             ? Objects.equals(alias.qualifiedName(), u.qualifiedName())
                             : Objects.equals(alias.name(), u.name()))) {

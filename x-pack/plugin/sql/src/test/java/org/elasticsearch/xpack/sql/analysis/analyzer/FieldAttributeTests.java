@@ -306,7 +306,7 @@ public class FieldAttributeTests extends ESTestCase {
             VerificationException.class,
             () -> plan("SELECT sum(missing) AS missing FROM test WHERE missing = 0")
         );
-        assertEquals("Found 1 problem\nline 1:12: Unknown column [missing]", ex.getMessage());
+        assertEquals("Found 1 problem\nline 1:48: Unknown column [missing]", ex.getMessage());
     }
 
     public void testFunctionWithExpressionOverNonExistingFieldAsArgumentAndSameAlias() throws Exception {
@@ -319,7 +319,7 @@ public class FieldAttributeTests extends ESTestCase {
             VerificationException.class,
             () -> plan("SELECT LENGTH(CONCAT(missing, 'x')) + 1 AS missing FROM test WHERE missing = 0")
         );
-        assertEquals("Found 1 problem\nline 1:22: Unknown column [missing]", ex.getMessage());
+        assertEquals("Found 1 problem\nline 1:68: Unknown column [missing]", ex.getMessage());
     }
 
     public void testExpandStarOnIndexWithoutColumns() {
